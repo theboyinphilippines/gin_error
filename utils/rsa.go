@@ -3,7 +3,7 @@ package utils
 import (
 	"crypto/rand"
 	"crypto/rsa"
-	"crypto/sha1"
+	"crypto/sha256"
 	"crypto/x509"
 	"encoding/base64"
 	"encoding/pem"
@@ -72,7 +72,7 @@ func RSAEncrypt(originalBytes []byte, filename string) ([]byte, error) {
 	// 2、RSA加密,参数是随机数、公钥对象、需要加密的字节
 	// Reader是一个全局共享的密码安全的强大的伪随机生成器
 	//return rsa.EncryptPKCS1v15(rand.Reader, publicKey, originalBytes)  //这种加密不太安全
-	return rsa.EncryptOAEP(sha1.New(), rand.Reader, publicKey, originalBytes, nil)
+	return rsa.EncryptOAEP(sha256.New(), rand.Reader, publicKey, originalBytes, nil)
 }
 
 // RSA解密字节数组,返回字节数组
@@ -84,7 +84,7 @@ func RSADecrypt(cipherBytes []byte, filename string) ([]byte, error) {
 	}
 	// 2、ras解密,参数是随机数、私钥对象、需要解密的字节
 	//return rsa.DecryptPKCS1v15(rand.Reader, privateKey, cipherBytes)
-	return rsa.DecryptOAEP(sha1.New(), rand.Reader, privateKey, cipherBytes, nil)
+	return rsa.DecryptOAEP(sha256.New(), rand.Reader, privateKey, cipherBytes, nil)
 }
 
 // 读取公钥文件,解析出公钥对象
