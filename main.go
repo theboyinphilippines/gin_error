@@ -23,6 +23,7 @@ func main() {
 		}
 		log.Println("RSA密钥生成成功！")
 	}
+	//统一响应
 	r.GET("/response_demo", controller.Response_demo)
 	r.GET("/ping", controller.Register)
 	r.POST("/login", controller.Login)

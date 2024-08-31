@@ -23,6 +23,7 @@ const (
 	ErrServerBusy
 )
 
+// 把code，msg放在map中
 var errMap = map[ResCode]string{
 	ErrMysql:      "数据库错误",
 	ErrExistUser:  "用户已存在",
