@@ -2,6 +2,7 @@ package main
 
 import (
 	"gin_error/controller"
+	logx "gin_error/log"
 	"gin_error/middleware"
 	"gin_error/utils"
 	"github.com/gin-gonic/gin"
@@ -11,6 +12,8 @@ import (
 
 func main() {
 	r := gin.Default()
+	logx.Logger = logx.NewElkLogger("127.0.0.1", 50000, 5)
+	logx.Logger.Infof("connect mysql success")
 	_, err := os.Stat("./certs/private.pem")
 	if err == nil {
 		log.Println("RSA密钥文件已经存在！")
@@ -20,7 +23,7 @@ func main() {
 		}
 		log.Println("RSA密钥生成成功！")
 	}
-
+	r.GET("/response_demo", controller.Response_demo)
 	r.GET("/ping", controller.Register)
 	r.POST("/login", controller.Login)
 	//对称加密AES CBC加密块模式
