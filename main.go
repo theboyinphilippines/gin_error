@@ -27,6 +27,7 @@ func main() {
 	r.GET("/response_demo", controller.Response_demo)
 	r.GET("/ping", controller.Register)
 	r.POST("/login", controller.Login)
+	r.POST("/user/login", controller.UserLogin)
 	//对称加密AES CBC加密块模式
 	r.POST("/encryptAES", controller.Encrypt)
 	//对称解密AES CBC加密块模式
@@ -46,6 +47,11 @@ func main() {
 		// 权限策略管理
 		apiv1.POST("/casbin", controller.Create)
 		apiv1.GET("/casbin/list", controller.List)
+	}
+	userv1 := r.Group("/user/v1").Use(middleware.JWTAuth())
+
+	{
+		userv1.POST("/userInfo", controller.UserInfo)
 	}
 	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }
